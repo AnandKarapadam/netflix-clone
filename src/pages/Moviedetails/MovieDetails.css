@@ -1,0 +1,119 @@
+.movie-hero{
+    position:relative;
+}
+.back-arrow{
+    position:absolute;
+    width: 40px;
+    top: 70px;
+    margin-left: 6%;
+    z-index: 10;
+    cursor: pointer;
+}
+.movie-banner-img{
+    width:100%;
+    -webkit-mask-image:linear-gradient(to right,transparent,black 75%);
+    mask-image:linear-gradient(to right, transparent, black 75%);
+    height: 100vh;
+}
+.movie-hero-caption{
+    position:absolute;
+    width:100%;
+    padding-left:6%;
+    bottom: 0%;
+}
+.movie-hero-caption h1{
+    background: linear-gradient(
+    120deg,
+    #999999 0%,
+    #e6e6e6 25%,
+    #ffffff 50%,
+    #cccccc 75%,
+    #999999 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-size:65px;
+}
+.movie-hero-caption p{
+    max-width:600px;
+    font-size:17px;
+    margin-bottom:20px;
+}
+.movie-hero-btns{
+    display:flex;
+    gap:10px;
+    margin-bottom: 30px;
+}
+.movie-hero-btns .btn img{
+    width:25px;
+}
+.movie-hero-btns .btn{
+    border:0;
+    outline:0;
+    padding:8px 20px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:15px;
+    font-weight:600;
+    background:white;
+    border-radius:4px;
+    cursor:pointer;
+}
+.movie-hero-btns .btn.dark-btn{
+    color:white;
+    background:#6d6d6eb3;
+}
+.movie-hero-btns .btn:hover{
+    background:#ffffffbf;
+}
+.movie-hero-btns .btn.dark-btn:hover{
+    background:#6d6d6eff;
+}
+.movie-spinner{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.movie-spinner img{
+    width: 60px;
+}
+
+@media (max-width:1103px) {
+    .movie-hero-caption h1{
+        font-size: 40px;
+    }
+    .movie-hero-caption p{
+        font-size: 10px;
+    }
+}
+@media (max-width:800px) {
+    .movie-hero-caption h1{
+        font-size: 35px;
+    }
+    .movie-hero-caption p{
+        font-size: 10px;
+    }
+    .movie-hero-btns .btn{
+        padding: 4px 15px;
+    }
+}
+@media (max-width:500px) {
+    .movie-hero-caption h1{
+        font-size: 20;
+    }
+    .movie-hero-btns .btn{
+        padding: 4px 15px;
+        font-size: 10px;
+    }
+    .movie-hero-btns .btn img{
+        width:20px;
+    }
+}
