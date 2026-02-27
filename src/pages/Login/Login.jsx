@@ -22,6 +22,10 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [remember, setRemember] = useState(false);
+
+  // ✅ Added error state
+  const [errors, setErrors] = useState({});
+
   const faqData = [
     {
       question: "What is Netflix?",
@@ -44,15 +48,16 @@ function Login() {
         "Netflix is flexible. You can easily cancel your account online in two clicks. There are no cancellation fees – start or stop your account anytime.",
     },
     {
-      question:"What can I watch on Netflix?",
-      answer:'Netflix has an extensive library of feature films, documentaries, shows, anime, award-winning Netflix originals, and more. Watch as much as you want, anytime you want.'
+      question: "What can I watch on Netflix?",
+      answer:
+        "Netflix has an extensive library of feature films, documentaries, shows, anime, award-winning Netflix originals, and more. Watch as much as you want, anytime you want.",
     },
     {
-      question:"Is Netflix good for kids?",
-      answer:'The Netflix Kids experience is included in your membership to give parents control while kids enjoy family-friendly TV shows and films in their own space.Kids profiles come with PIN-protected parental controls that let you restrict the maturity rating of content kids can watch and block specific titles you don’t want kids to see.'
-    }
+      question: "Is Netflix good for kids?",
+      answer:
+        "The Netflix Kids experience is included in your membership to give parents control while kids enjoy family-friendly TV shows and films in their own space.Kids profiles come with PIN-protected parental controls that let you restrict the maturity rating of content kids can watch and block specific titles you don’t want kids to see.",
+    },
   ];
-
 
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -60,8 +65,41 @@ function Login() {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
+  // ✅ Validation Function
+  const validateForm = () => {
+    let newErrors = {};
+
+    if (signState === "Sign Up") {
+      if (!name.trim()) {
+        newErrors.name = "Name is required";
+      } else if (name.trim().length < 3) {
+        newErrors.name = "Name must be at least 3 characters";
+      }
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
+    ) {
+      newErrors.email = "Invalid email address";
+    }
+
+    if (!password.trim()) {
+      newErrors.password = "Password is required";
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const user_auth = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) return;
+
     setLoading(true);
 
     try {
@@ -70,15 +108,18 @@ function Login() {
       } else {
         await setPersistence(auth, browserSessionPersistence);
       }
+
       if (signState === "Sign In") {
         await login(email, password);
       } else {
         await signup(name, email, password);
       }
+
       navigate("/");
     } catch (error) {
-      console.log(error);
+      setErrors({ general: error.message });
     }
+
     setLoading(false);
   };
 
@@ -88,35 +129,45 @@ function Login() {
     </div>
   ) : (
     <>
-      
       <div className="login">
         <img src={logo} className="login-logo" alt="logo" />
         <div className="login-form">
           <h1>{signState}</h1>
           <form>
             {signState === "Sign Up" && (
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Your name"
-              />
+              <>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your name"
+                />
+                {errors.name && <p className="error">{errors.name}</p>}
+              </>
             )}
+
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
             />
+            {errors.email && <p className="error">{errors.email}</p>}
+
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
             />
+            {errors.password && <p className="error">{errors.password}</p>}
+
             <button className="sign-btn" onClick={user_auth} type="submit">
               {signState}
             </button>
+
+            {errors.general && <p className="error">{errors.general}</p>}
+
             <div className="form-help">
               <div className="remember">
                 <input
@@ -124,21 +175,26 @@ function Login() {
                   checked={remember}
                   onChange={(e) => setRemember(e.target.checked)}
                 />
-                <label htmlFor="">Remember Me</label>
+                <label>Remember Me</label>
               </div>
               <p>Need Help?</p>
             </div>
           </form>
+
           <div className="form-switch">
             {signState === "Sign In" ? (
               <p>
                 New to Netflix?{" "}
-                <span onClick={() => setSignState("Sign Up")}>Sign Up Now</span>
+                <span onClick={() => setSignState("Sign Up")}>
+                  Sign Up Now
+                </span>
               </p>
             ) : (
               <p>
                 Already have an account?{" "}
-                <span onClick={() => setSignState("Sign In")}>Sign In Now</span>
+                <span onClick={() => setSignState("Sign In")}>
+                  Sign In Now
+                </span>
               </p>
             )}
           </div>
@@ -189,7 +245,9 @@ function Login() {
           {faqData.map((item, idx) => (
             <div
               key={idx}
-              className={`faq-item ${activeIndex === idx ? "active" : ""}`}
+              className={`faq-item ${
+                activeIndex === idx ? "active" : ""
+              }`}
               onClick={() => toggleFAQ(idx)}
             >
               <div className="faq-question">
@@ -206,7 +264,7 @@ function Login() {
         </div>
       </div>
 
-      <Footer/>
+      <Footer />
     </>
   );
 }
