@@ -60,15 +60,17 @@ function MyList() {
         <div className="mylist-container">
           <h1 className="mylist-head">My List</h1>
 
-          {loading ? (
+          {loading ? ( 
             <div className="mylist-spinner">
               <img src={netflix_spinner} alt="Loading..." />
             </div>
           ) : movies.length === 0 ? (
-            <p>No movies added yet.</p>
+            <div className="no-movies">
+              <p className="text-center">No movies added yet.</p>
+            </div>
           ) : (
             <div className="mylist-grid">
-              {movies.map((movie) => (
+              {movies.map((movie) => ( 
                 <div key={movie.id} className="movie-card">
                   <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

@@ -44,9 +44,9 @@ function Player() {
         allowFullScreen
       ></iframe>
       <div className="player-info">
-        <p>{apiData.published_at.slice(0, 10)}</p>
-        <p>{apiData.name}</p>
-        <p>{apiData.type}</p>
+        <p className="player-titles date">{apiData.published_at.slice(0, 10)}</p>
+        <p className="player-titles title">{apiData.name}</p>
+        <p className="player-titles">{apiData.type}</p>
       </div>
     </div>
   );

@@ -60,6 +60,13 @@
 .mylist-spinner img {
     width: 60px;
 }
+.no-movies{
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 @media (max-width:1450px) {
     .movie-card #movie-title {

@@ -21,4 +21,26 @@
     align-items: center;
     justify-content: space-between;
     width: 90%;
+    gap: 20px;
+}
+
+@media (max-width:800px) {
+    .player-titles{
+        font-size: 12px;
+    }
+}
+@media (max-width:570px) {
+    .player-titles{
+        font-size: 10px;
+    }
+    .player-titles.title{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .player-titles.date{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
